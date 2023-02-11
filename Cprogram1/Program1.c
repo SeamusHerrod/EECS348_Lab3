@@ -84,6 +84,7 @@ void movingAvgSales(const float* sales_data)
 	const char months[12][15]={"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 	float moving_avg;
 	char dash = '-';
+	printf("6-Month Moving Average:\n\n");
 	for ( int i = 0; i < 7; i++)
 	{
 		for ( int j = i; j < (i + 6); j++)
@@ -93,18 +94,60 @@ void movingAvgSales(const float* sales_data)
 			
 		}
 		moving_avg /= 6;
-		printf("%-9s%13c%16s%27.2f\n", months[i], dash, months[i + 5], moving_avg);
+		printf("%-12s%-2c%-12s$%-10.2f\n", months[i], dash, months[i + 5], moving_avg);
 		moving_avg = 0;
-
-	//	printf("%.2f\n", moving_avg);	
 	}
-	/*for ( int itr = 0; itr < 7; itr++)
-	{
-		printf("%-9s%13c%16s%27.2f\n", months[itr], dash, months[itr + 6], moving_avg[itr]);
-	}*/
-
-
+	return;
 }
+
+void HighLow( const float* sales_data )
+{
+	const char months[12][15]={"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+	float temp[12];
+	float high;
+	int monthNum;
+	int *month_ptr = &monthNum;
+
+	printf("\nSales Report (Highest - Lowest)\n");
+	printf("Month\tSales\n");
+	//copy sales_data into temp
+	for ( int i = 0; i < 12; i++ )
+	{
+		temp[ i ] = sales_data[ i ];
+	}
+
+	//instead of finding maxSales, it'll be simpler to sort the temp array 
+	for ( int i = 0; i < 12; i++ )
+	{
+		for ( int j = i + 1; j < 12; j++ )
+		{
+			if ( temp[ i ] < temp[ j ] )
+			{
+				high = temp[ i ];
+				temp[ i ] = temp[ j ];
+				temp[ j ] = high;
+			}
+		}
+	}
+	
+	for ( int i = 0; i < 12; i++ )//loop through temp, 
+	{
+		float find = temp[ i ];
+		for ( int j = 0; j < 12; j++ )//loop through sales_data, if temp[i] == sales_data[j], print month[j]
+		{
+			//printf("j = %d\n", j);
+			if ( find ==  sales_data[ j ])
+			{
+				//printf("condition met: j = %d\n", j);
+				printf("%-12s$%-10.2f\n", months[ j ], temp[ i ]);
+			}
+		}
+	}
+
+	return;
+}
+
+
 
 
 int main()
@@ -116,7 +159,7 @@ int main()
 		printf("%.2f\n", month_sales_data[i]);
 	}*/
 
-	printf("Monthly Sales Report for 2022:\n\n");
+	printf("\nMonthly Sales Report for 2022:\n\n");
 	
 	int monthNum;
 	int *month_ptr = &monthNum;
@@ -127,8 +170,8 @@ int main()
 	printf("Sales Summary:\n\n");
 	printf("Minimum Sales: %.2f  (%s)\n", minSales(month_sales_data, month_ptr), months[ monthNum ]);
 	printf("Maximum Sales: %.2f  (%s)\n", maxSales(month_sales_data, month_ptr), months[ monthNum ]);
-	printf("Average Sales: %.2f\n", avgSales(month_sales_data));
-	
+	printf("Average Sales: %.2f\n\n", avgSales(month_sales_data));
 	movingAvgSales(month_sales_data);
+	HighLow(month_sales_data);
 	return 0;
 }
