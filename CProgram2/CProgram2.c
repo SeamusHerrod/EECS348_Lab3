@@ -27,8 +27,6 @@ int main()
 	  TD + 1-pt FG 7 pt. 
 	*/
 
-	//int num_TD, num_FG, num_safe, num_TD_conv, num_TD_FG, current_total;
-
 	for ( int TD_2pt = 0; TD_2pt <= score / 8; TD_2pt++ )
 	{
 		int num_TD_conv = score;
@@ -51,13 +49,10 @@ int main()
 						{
 						
 							int num_safe = num_FG - ( safe * 2 );
-							//printf("current total = %d\n", current_total);						       
 							int total = TD_2pt*8 + TD_1pt*7 + td*6 + fg*3 + safe*2;
-							//printf("total = %d\n", total);
-							//current_total += ( safe * 2 ) ;
 							if ( total == score )
 							{
-							printf("TD_2pt = %d, TD_1pt = %d, TD = %d, FG = %d, safety = %d\n", TD_2pt, TD_1pt, td, fg, safe);
+								printf("TD_2pt = %d, TD_1pt = %d, TD = %d, FG = %d, safety = %d\n", TD_2pt, TD_1pt, td, fg, safe);
 							}
 						}
 					}
